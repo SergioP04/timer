@@ -10,6 +10,9 @@ const resetBtn = document.getElementById('resetBtn');
 const addMinuteBtn = document.getElementById('addMinuteBtn');
 const steam = document.getElementById('steam');
 const presetButtons = document.querySelectorAll('.preset');
+const character = document.getElementById('characterImg');
+const characterWrap = document.getElementById('characterWrap');
+const timerCard = document.getElementById('timerCard');
 
 let totalSeconds = 0;
 let remainingSeconds = 0;
@@ -20,6 +23,47 @@ function formatTime(seconds) {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function removeBreakFX() {
+  characterWrap.classList.remove('break-mode');
+  timerCard.classList.remove('break-mode');
+}
+
+function addBreakFX() {
+  characterWrap.classList.add('break-mode');
+  timerCard.classList.add('break-mode');
+}
+
+function setMood(state) {
+  if (!character) return;
+
+  removeBreakFX();
+
+  if (state === 'lockin') {
+    character.style.transform = 'scale(1)';
+    character.style.filter = 'drop-shadow(0 0 16px rgba(255, 0, 70, 0.35))';
+    character.style.opacity = '1';
+  }
+
+  if (state === 'bored') {
+    character.style.transform = 'rotate(-5deg) scale(0.96)';
+    character.style.filter = 'grayscale(35%) brightness(0.72) drop-shadow(0 0 10px rgba(255, 0, 70, 0.12))';
+    character.style.opacity = '0.9';
+  }
+
+  if (state === 'paused') {
+    character.style.transform = 'rotate(-2deg) scale(0.94)';
+    character.style.filter = 'grayscale(50%) brightness(0.65)';
+    character.style.opacity = '0.78';
+  }
+
+  if (state === 'break') {
+    character.style.transform = 'scale(1.14)';
+    character.style.filter = 'drop-shadow(0 0 30px rgba(255, 0, 70, 0.85)) brightness(1.14)';
+    character.style.opacity = '1';
+    addBreakFX();
+  }
 }
 
 function updateDisplay() {
@@ -35,12 +79,16 @@ function updateDisplay() {
 
   if (percent === 100 && totalSeconds === 0) {
     status.textContent = 'LOCK IN';
+    setMood('lockin');
   } else if (percent === 0 && totalSeconds > 0) {
-    status.textContent = 'break time';
+    status.textContent = 'BREAK TIME';
+    setMood('break');
   } else if (isPaused) {
-    status.textContent = 'Paused';
+    status.textContent = 'PAUSED';
+    setMood('paused');
   } else {
     status.textContent = 'LOCK IN';
+    setMood('bored');
   }
 
   if (remainingSeconds > 0 && !isPaused) {
@@ -48,11 +96,15 @@ function updateDisplay() {
   }
 
   if (isPaused && remainingSeconds > 0) {
-    steam.style.opacity = '0.35';
+    steam.style.opacity = '0.3';
   }
 
   if (remainingSeconds === 0 && totalSeconds > 0) {
-    steam.style.opacity = '0.15';
+    steam.style.opacity = '0.12';
+  }
+
+  if (remainingSeconds === 0 && totalSeconds === 0) {
+    steam.style.opacity = '0.9';
   }
 }
 
@@ -77,7 +129,7 @@ function startTimer(minutes) {
 
       if (remainingSeconds === 0) {
         clearTimer();
-        alert('break time');
+        alert('BREAK TIME');
       }
     }
   }, 1000);
@@ -93,9 +145,10 @@ function resetTimer() {
   percentDisplay.textContent = 'Coffee level: 100%';
   status.textContent = 'LOCK IN';
   steam.style.opacity = '0.9';
+  setMood('lockin');
 }
 
-presetButtons.forEach(button => {
+presetButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const minutes = Number(button.dataset.minutes);
     startTimer(minutes);

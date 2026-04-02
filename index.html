@@ -7,17 +7,24 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
+  <div class="bg-noise"></div>
+
+  <main class="app">
     <h1>Coffee Mug Timer</h1>
-    <p class="subtitle">The cup drains in the dark until your time is done.</p>
+    <p class="subtitle">Lock in until the mug runs dry.</p>
 
     <div class="layout">
       <section class="left-panel">
         <div class="mug-scene">
+          <div class="aura"></div>
+
           <div class="steam" id="steam">
             <span></span>
             <span></span>
             <span></span>
+          </div>
+
+          <div class="character" id="characterWrap">
           </div>
 
           <div class="mug-handle"></div>
@@ -36,7 +43,7 @@
           <div class="shadow"></div>
         </div>
 
-        <div class="timer-card">
+        <div class="timer-card" id="timerCard">
           <div class="status" id="status">LOCK IN</div>
           <div class="time" id="timeDisplay">00:00</div>
           <div class="percent" id="percentDisplay">Coffee level: 100%</div>
@@ -69,7 +76,7 @@
         </div>
       </section>
     </div>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
