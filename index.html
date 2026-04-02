@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gothic Coffee Mug Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>Coffee Mug Timer</h1>
+    <p class="subtitle">The cup drains in the dark until your time is done.</p>
+
+    <div class="layout">
+      <section class="left-panel">
+        <div class="mug-scene">
+          <div class="steam" id="steam">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="mug-handle"></div>
+
+          <div class="mug">
+            <div class="mug-rim"></div>
+            <div class="mug-inside">
+              <div class="coffee" id="coffee">
+                <div class="coffee-top"></div>
+              </div>
+            </div>
+            <div class="mug-shine"></div>
+          </div>
+
+          <div class="plate"></div>
+          <div class="shadow"></div>
+        </div>
+
+        <div class="timer-card">
+          <div class="status" id="status">LOCK IN</div>
+          <div class="time" id="timeDisplay">00:00</div>
+          <div class="percent" id="percentDisplay">Coffee level: 100%</div>
+        </div>
+      </section>
+
+      <section class="right-panel">
+        <h2>Choose your break</h2>
+
+        <div class="button-grid">
+          <button class="preset" data-minutes="5">5 Minutes</button>
+          <button class="preset" data-minutes="10">10 Minutes</button>
+          <button class="preset" data-minutes="15">15 Minutes</button>
+          <button class="preset" data-minutes="20">20 Minutes</button>
+        </div>
+
+        <div class="custom-box">
+          <h3>Custom time</h3>
+          <div class="custom-row">
+            <input type="number" id="customMinutes" min="1" max="180" placeholder="Enter minutes" />
+            <button id="setCustom" class="secondary">Start</button>
+          </div>
+        </div>
+
+        <div class="button-grid">
+          <button id="pauseBtn" class="secondary">Pause</button>
+          <button id="resumeBtn" class="secondary">Resume</button>
+          <button id="resetBtn" class="danger">Reset</button>
+          <button id="addMinuteBtn" class="secondary">+1 Minute</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
